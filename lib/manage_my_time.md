@@ -6,7 +6,6 @@ I want to see an estimate of reading time for a text, assuming that I can read 2
 
 ## 2. Design the Method Signature
 
-word_count: counts the number of words in the str
 reading_time_calc: calculates the reading time based on word count; in minutes
 
 
