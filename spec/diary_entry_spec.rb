@@ -36,4 +36,5 @@ RSpec.describe DiaryEntry do
     result2 = entry.reading_chunk(3, 4)
     expect(result2).to eq "Makers and then we will just add more words so that the"
   end
+  # change to two expect statements instead!
 end
