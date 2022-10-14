@@ -36,24 +36,29 @@ end
 3. Create Examples as Tests
 Make a list of examples of how the class will behave in different situations.
 
+# displaying an empty task list
 my_task = ToDoList.new
 my_task.display_tasks => []
 
+# adding a task to the list
 my_task = ToDoList.new
 my_task.add_task("sweep the floor")
 my_task.display_tasks => ["sweep the floor"]
 
+# returns multiple to do's
 my_task = ToDoList.new
 my_task.add_task("sweep the floor")
 my_task.add_task("take out the trash")
 my_task.display_tasks => ["sweep the floor", "take out the trash"]
 
+# removing a task from the list
 my_task = ToDoList.new
 my_task.add_task("sweep the floor")
 my_task.add_task("take out the trash")
 my_task.marked_complete("sweep the floor")
 my_task.display_tasks => ["take out the trash"]
 
+# attempting to delete when the to do is not in the list
 my_task = ToDoList.new
 my_task.marked_complete("sweep the floor") => "Item is not in your list. Please check the list."
 
