@@ -7,7 +7,10 @@ class GrammarStats
   def check(text)
     # Returns true or false depending on whether the text begins with a capital
     # letter and ends with a sentence-ending punctuation mark.
+    return false if text == ""
+
     if (text[0] == text[0].capitalize && [".","?","!"].include?(text[-1])) == true
+      # %w[. ! ?]
       # text[-1].match(/[!.?]/)
       @tested += 1
       @correct += 1

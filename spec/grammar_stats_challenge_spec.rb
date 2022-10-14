@@ -49,3 +49,8 @@ describe GrammarStats do
     end
   end
 end
+
+#describe GrammarStats do
+  before :each do
+    @grammar = GrammarStats.new
+  end
