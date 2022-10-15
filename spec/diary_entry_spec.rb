@@ -21,8 +21,8 @@ RSpec.describe DiaryEntry do
 
   it "4. returns reading time as an integer" do
     entry = DiaryEntry.new("Book", "Once upon a time")
-    result = entry.reading_time(120)
-    expect(result).to eq "2 seconds"
+    result = entry.reading_time(4)
+    expect(result).to eq 1
   end
 
   it "5. returns the amount of words that can be read" do

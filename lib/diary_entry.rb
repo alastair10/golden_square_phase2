@@ -17,7 +17,7 @@ class DiaryEntry
   end
 
   def count_words
-    return @contents.empty? ? 0 : contents.split.count
+    return @contents.empty? ? 0 : @contents.split.count
     # could also implement using @contents.count(" ") + 1
     # saves computer from creating a potentially massive list
   end
@@ -26,7 +26,8 @@ class DiaryEntry
                         # user can read per minute
     # Returns an integer representing an estimate of the reading time in minutes
     # for the contents at the given wpm.
-    "#{@contents.split.count/(wpm/60)} seconds"
+    fail "WPM must be positive." unless wpm.positive?
+    return (count_words / wpm.to_f).ceil
   end
   
   def reading_chunk(wpm, minutes) # `wpm` is an integer representing the number
