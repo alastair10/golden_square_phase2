@@ -1,20 +1,27 @@
 class DiaryEntry
+
   def initialize(title, contents) # title, contents are strings
     @title = title
     @contents = contents
     @counter = 0
   end
+
   def title
     # Returns the title as a string
     @title.to_s
   end
+
   def contents
     # Returns the contents as a string
     @contents.to_s
   end
+
   def count_words
-    @contents.split.count
+    return @contents.empty? ? 0 : contents.split.count
+    # could also implement using @contents.count(" ") + 1
+    # saves computer from creating a potentially massive list
   end
+
   def reading_time(wpm) # wpm is an integer representing the number of words the
                         # user can read per minute
     # Returns an integer representing an estimate of the reading time in minutes
