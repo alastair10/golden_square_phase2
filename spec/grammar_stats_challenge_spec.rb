@@ -50,7 +50,16 @@ describe GrammarStats do
   end
 end
 
+ 
+
 #describe GrammarStats do
-  before :each do
-    @grammar = GrammarStats.new
-  end
+#  before :each do
+#    @grammar = GrammarStats.new
+#  end
+#
+#
+# ruby - rubocop install VSCode add in
+# type gem install rubocop
+#
+#
+#%w[. ! ?]

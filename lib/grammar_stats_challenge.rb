@@ -9,7 +9,7 @@ class GrammarStats
     # letter and ends with a sentence-ending punctuation mark.
     return false if text == ""
 
-    if (text[0] == text[0].capitalize && [".","?","!"].include?(text[-1])) == true
+    if (text[0] == text[0].capitalize && %w[. ? !].include?(text[-1])) == true
       # %w[. ! ?]
       # text[-1].match(/[!.?]/)
       @tested += 1
