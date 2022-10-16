@@ -39,6 +39,11 @@ class Diary
     readable_entries = @entries.filter do |entry|
       entry.reading_time(wpm) <= minutes
     end
-    return readable_entries.first
+    best_entry = readable_entries.max_by do |entry| 
+      entry.count_words
+    end
+    #best_entry = readable_entries.sort_by do |entry| entry.count_words
+    #end
+    #best_entry.last
   end
 end

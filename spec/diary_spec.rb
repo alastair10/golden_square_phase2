@@ -8,16 +8,19 @@ describe Diary do
     end
   end
 
-  context "given a diary entry and reading speed in wpm" do
-    it "returns the time it takes to read the entire diary" do
+  context "given no entry" do
+    it "returns word counut of 0" do
       diary = Diary.new
-      diary.add("Dear Diary")
-      diary.add("Hello how are you")
-      expect(diary.reading_time(2)).to eq 3
+      expect(diary.count_words).to eq 0
     end
   end
 
-
+  context "given no entry" do
+    it "returns nil" do
+      diary = Diary.new
+      expect(diary.find_best_entry_for_reading_time(2,4)).to eq nil
+    end
+  end
 
 
 end

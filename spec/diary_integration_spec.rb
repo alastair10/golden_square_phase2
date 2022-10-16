@@ -102,4 +102,20 @@ describe "Diary integration" do
       expect(result).to eq entry_2
     end
   end
+
+  context "multiple readable and one unreadable" do
+    it "selects the longest readable one" do
+      diary = Diary.new
+      entry_1 = DiaryEntry.new("1", "one two three")
+      entry_2 = DiaryEntry.new("2", "five six")
+      entry_3 = DiaryEntry.new("3", "seven eight nine ten")
+      entry_4 = DiaryEntry.new("3", "seven eight nine ten eleven")
+      diary.add(entry_1)
+      diary.add(entry_2)
+      diary.add(entry_3)
+      diary.add(entry_4)
+      result = diary.find_best_entry_for_reading_time(2,2)
+      expect(result).to eq entry_3
+    end
+  end
 end
