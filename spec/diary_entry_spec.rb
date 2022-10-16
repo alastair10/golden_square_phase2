@@ -37,4 +37,5 @@ RSpec.describe DiaryEntry do
     expect(result2).to eq "Makers and then we will just add more words so that the"
   end
   # change to two expect statements instead!
+  
 end
