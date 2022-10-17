@@ -26,118 +26,100 @@
 
 
 # 2. Design the Class System
+┌──────────────────────────┐                  ┌────────────────────────┐
+│ Diary                    │                  │ PhoneNumbers           │
+│ -----                    │                  │ ------------           │
+│                          │ PhoneNumbers     │                        │
+│ -initialize              │  will take       │ -initialize            │
+│ -add                     ├─────────────────►│ -add                   │
+│ -all                     │  instance of     │ -extract_number        │
+│ -count_words             │  Diary           │                        │
+│ -reading_time            │                  │                        │
+│                          │                  │                        │
+└────────────┬─────────────┘                  └────────────────────────┘
+             │
+             │
+DiaryEntry   │
+will take    │
+instance of  │
+Diary        │
+             │
+             ▼
+┌──────────────────────────┐
+│ DiaryEntry               │
+│ ----------               │
+│                          │
+│ -initialize              │
+│ -title                   │
+│ -contents                │
+│ -count_words             │
+│ -reading_time            │
+│ -reading_chunk           │
+└──────────────────────────┘
 
 ┌──────────────────────────┐
-│ Diary                    │
+│ ToDo                     │
 │ -----                    │
 │                          │
-│ -add                     ├───────────────────────────────────┐
-│ -all                     │                                   │
-│                          ├──────────────┐                    │
-│                          │              │                    │
-│                          │              │                    │
-│                          │              │                    │
-└──────────────────────────┘              │                    │
-                                          │                    │
-                                 Diary has│                    │
-                                          │                    │
- ┌─────────────────────────┐     one or more entries           │
- │ DiaryEntry              │              │                    │
- │ ----------              │              │                    │
- │                         │              │                    │
- │ -select_entry           │              │                    │
- │ -entry_based_on_time    │◄─────────────┘                    │
- │                         │                                   │
- │                         │                                   │
- │                         │                                   │
- │                         │                                   │
- └─────────────────────────┘                                   │
-                                                               │
-                                                               │
- ┌─────────────────────────┐                                   │
- │ ToDo                    │                                   │
- │ -----                   │                                   │
- │                         │                                   │
- │ -add                    │                                   │
- │ -all                    │                                   │
- │                         │                                   │
- │                         │                                   │
- │                         │                                   │
- │                         │                                   │
- └─────────────────────────┘                                   │
-                                   Diary has one or more       │
-  ┌────────────────────────┐       entries with numbers in it  │
-  │ PhoneNumbers           │                                   │
-  │                        │                                   │
-  │ -add                   │                                   │
-  │ -extract_number        ◄───────────────────────────────────┘
-  │ -all                   │
-  │                        │
-  │                        │
-  │                        │
-  │                        │
-  └────────────────────────┘
-
-class Diary
-  def initialize(title, entry)
-  end
-
-  def add(entry)
-  end
-
-  def all
-    #returns list of all diary entries
-  end
-end
-
-class DiaryEntry
-  def initialize
-  end
-
-  def select_entry
-  end
-
-  def entry_based_on_time(wpm, minutes)
-  end
-end
-
-
-
-class ToDo
-  def initialize
-  end
-
-  def add(todo)
-  end
-
-  def all
-  end
-end
+│ -initialize              │
+│ -task                    │
+│ -mark_done!              │
+│ -done?                   │
+│                          │
+│                          │
+└────────────┬─────────────┘
+             │
+             │ ToDoList takes instance
+             │ of ToDo list
+             ▼
+┌──────────────────────────┐
+│ ToDoList                 │
+│ ---------                │
+│                          │
+│ -initialize              │
+│ -add                     │
+│ -incomplete              │
+│ -complete                │
+│                          │
+└──────────────────────────┘
 
 class PhoneNumbers
   def initialize
   end
 
   def add
-    # This will add diary entries
+    # will add diary entries to a list
   end
 
   def extract
-    # This will extract the numbers from entries
+    # extracts entries with a phone number in them
+    # adds entries to a new list
   end
 
   def all
-    # returns list of numbers
+    #returns list of phone numbers 
   end
 end
 
 
 # 3. Create Examples as Integration Tests
 
+# integration test for ToDo and ToDoList
 
+task = ToDo.new("clean kitchen")
+todo_list = ToDoList.new()
+todo_list.add
+expect(todo_list.incomplete).to eq [task]
 
+# inegration test for Diary and DiaryEntry
 
-
+diary = Diary.new
+diary_entry_1 = DiaryEntry.new("today", "I saw a dinosaur")
+diary_entry_2 = DiaryEntry.new("yesterday", "I jumped out of a plane")
+diary.add(diary_entry_1)
+diary.add(diary_entry_2)
+diary.count_words
+diary.reading_time(2)
 
 
 
