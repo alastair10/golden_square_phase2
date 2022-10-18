@@ -3,7 +3,7 @@ require "todo_list"
 
 describe "Todo Integration" do
   context "1. add a todo" do
-    it "lists out the incomolete todo" do
+    it "lists out the incomplete todo" do
       todo = Todo.new("take out rubbish")
       todo_list = TodoList.new
       todo_list.add(todo)
@@ -46,7 +46,7 @@ describe "Todo Integration" do
     end
   end
 
-  context "takes all todos" do
+  context "5. takes all todos" do
     it "marks all as complete" do
       todo_list = TodoList.new
       todo_1 = Todo.new("fold shirts")

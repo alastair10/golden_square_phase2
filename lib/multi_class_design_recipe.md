@@ -26,25 +26,25 @@
 
 
 # 2. Design the Class System
+
 ┌──────────────────────────┐                  ┌────────────────────────┐
 │ Diary                    │                  │ PhoneNumbers           │
 │ -----                    │                  │ ------------           │
 │                          │ PhoneNumbers     │                        │
 │ -initialize              │  will take       │ -initialize            │
-│ -add                     ├─────────────────►│ -add                   │
-│ -all                     │  instance of     │ -extract_number        │
-│ -count_words             │  Diary           │                        │
-│ -reading_time            │                  │                        │
+│ -add                     ├─────────────────►│ -extract_number        │
+│ -all                     │  instance of     │ -contact_list          │
+│                          │  Diary           │                        │
+│                          │                  │                        │
 │                          │                  │                        │
 └────────────┬─────────────┘                  └────────────────────────┘
              │
              │
-DiaryEntry   │
+Diary        │
 will take    │
 instance of  │
-Diary        │
+DiaryEntry   │
              │
-             ▼
 ┌──────────────────────────┐
 │ DiaryEntry               │
 │ ----------               │
@@ -54,7 +54,7 @@ Diary        │
 │ -contents                │
 │ -count_words             │
 │ -reading_time            │
-│ -reading_chunk           │
+│ -entry_selection         │
 └──────────────────────────┘
 
 ┌──────────────────────────┐
@@ -62,65 +62,107 @@ Diary        │
 │ -----                    │
 │                          │
 │ -initialize              │
-│ -task                    │
-│ -mark_done!              │
-│ -done?                   │
-│                          │
-│                          │
+│ -task_item               │
 └────────────┬─────────────┘
              │
              │ ToDoList takes instance
              │ of ToDo list
-             ▼
-┌──────────────────────────┐
+             │
+┌────────────▼─────────────┐
 │ ToDoList                 │
 │ ---------                │
 │                          │
 │ -initialize              │
 │ -add                     │
-│ -incomplete              │
-│ -complete                │
-│                          │
+│ -all                     │
 └──────────────────────────┘
 
-class PhoneNumbers
+class Diary
   def initialize
   end
 
-  def add
-    # will add diary entries to a list
-  end
-
-  def extract
-    # extracts entries with a phone number in them
-    # adds entries to a new list
-  end
+  def add(entry)
+    # will take instance of DiaryEntry
+  end 
 
   def all
-    #returns list of phone numbers 
+    # returns a list of all entries
   end
 end
 
+class DiaryEntry
+  def initialize (title, contents)
+  end
+
+  def title
+    # returns title as a string
+  end
+
+  def contents
+    # returns contents as a string
+  end
+
+  def count_words
+    # returns the number of words in the contents
+  end
+
+  def reading_time(wpm)
+    # calculates reading time of the contents
+  end
+
+  def entry_selection (wpm, minutes)
+    # returns the entry to read based off of time
+  end
+end
+
+class ToDo
+  def initialize(task)
+    # takes task as a string 
+  end
+
+  def task_item
+    # returns task as a string
+  end
+end
+
+class ToDoList
+  def initialize(todo)
+    # takes instance of todo
+  end
+
+  def add
+    # adds task to list
+  end
+
+  def all
+    # returns list of all tasks
+  end
+end
+
+class PhoneNumbers
+  def initialize(diary)
+    # takes instance of Diary
+  end
+
+  def extract_number
+    # returns list of numbers from the diary entries
+  end
+
+  def contact_list
+    # returns a list of contacts
+  end
+end
 
 # 3. Create Examples as Integration Tests
 
-# integration test for ToDo and ToDoList
-
-task = ToDo.new("clean kitchen")
-todo_list = ToDoList.new()
-todo_list.add
-expect(todo_list.incomplete).to eq [task]
-
-# inegration test for Diary and DiaryEntry
-
-diary = Diary.new
-diary_entry_1 = DiaryEntry.new("today", "I saw a dinosaur")
-diary_entry_2 = DiaryEntry.new("yesterday", "I jumped out of a plane")
-diary.add(diary_entry_1)
-diary.add(diary_entry_2)
-diary.count_words
-diary.reading_time(2)
-
+  context "when we add an entry to the diary" do
+    it "adds the entry to a list" do
+      diary = Diary.new 
+      entry = DiaryEntry.new("Today", "I ate crisps.")
+      diary.add(entry)
+      expect(diary.all).to eq [entry] 
+    end
+  end
 
 
 
@@ -128,3 +170,25 @@ diary.reading_time(2)
 
 
 # 4. Create Examples as Unit Tests
+
+  # Diary
+  diary = Diary.new
+  expect(diary.all).to eq []
+
+  # DiaryEntry
+  entry = DiaryEntry.new("Today", "I saw a dinosaur")
+  result = entry.count_words
+  expect(result).to eq 4
+
+  # ToDo
+  todo = Todo.new("do laundry")
+  expect(todo.task_item).to eq "do laundry"
+
+  # ToDoList
+  todo_list = ToDoList.new("pay bills")
+  todo_list.add
+  expect(todo_list.all).to eq ["pay bills"]
+
+  # PhoneNumbers
+  number = PhoneNumbers.new("07477123456 is my friends number")
+  number.extract_number.to eq (["07477123456"])
