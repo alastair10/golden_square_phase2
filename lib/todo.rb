@@ -11,15 +11,15 @@ class Todo
     return @list.join("")
   end
 
-  def mark_done!
-    # Marks the todo as done
-    # Returns nothing
-    @done = @task.concat(" #DONE")
-  end
+  # def mark_done!
+  #   # Marks the todo as done
+  #   # Returns nothing
+  #   @done = @task.concat(" #DONE")
+  # end
 
-  def done?
-    # Returns true if the task is done
-    # Otherwise, false
-    return @task.include?("#DONE")
-  end
+  # def done?
+  #   # Returns true if the task is done
+  #   # Otherwise, false
+  #   return @task.include?("#DONE")
+  # end
 end
