@@ -28,4 +28,10 @@ class TodoList
   #     todo.mark_done!
   #   end
   # end
+
+  def all
+    # returns list of all tasks
+    @todo_list
+  end
+
 end

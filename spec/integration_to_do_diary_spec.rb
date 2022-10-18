@@ -4,6 +4,8 @@ require 'diary'
 require 'diary_entry'
 require 'phone_numbers'
 
+# Start testing Diary and DiaryEntry classes
+
 describe "integration test for Diary and DiaryEntry" do
   context "1. when we add an entry to the diary" do
     it "adds the entry to a list" do
@@ -14,8 +16,8 @@ describe "integration test for Diary and DiaryEntry" do
     end
   end
 
-  context "when we add multiple entries to the diary" do
-    xit "2. adds all entries to a list" do
+  context "2. when we add multiple entries to the diary" do
+    it "adds all entries to a list" do
       diary = Diary.new # new instance of class
       entry_1 = DiaryEntry.new("Yesterday", "I raced a cheetah.") # new instance of class
       entry_2 = DiaryEntry.new("Today", "I ate chocolate ice cream.") # a second instance
@@ -27,8 +29,8 @@ describe "integration test for Diary and DiaryEntry" do
     end
   end
 
-  context "given multiple diary entries" do
-    xit "3. counts the words in the entries excluding the title" do
+  context "3. given multiple diary entries" do
+    it "counts the words in the entries excluding the title" do
       diary = Diary.new
       entry_1 = DiaryEntry.new("Yesterday", "I ate crisps.") # new instance of class
       entry_2 = DiaryEntry.new("Today", "I ate chocolate ice cream.") # a second instance
@@ -38,8 +40,8 @@ describe "integration test for Diary and DiaryEntry" do
     end
   end
 
-  context "between one readable and one unreadable" do
-    xit "4. selects the readable one" do
+  context "4. between one readable and one unreadable" do
+    it "selects the readable one" do
       diary = Diary.new
       entry_1 = DiaryEntry.new("1", "one two three")
       entry_2 = DiaryEntry.new("2", "three four")
@@ -51,97 +53,104 @@ describe "integration test for Diary and DiaryEntry" do
   end
 end
 
+# Now we test ToDo and ToDoList classes
+
 describe "integration test for ToDo and ToDoList" do
   context "5. add a todo" do
-    xit "lists out the incomplete todo" do
+    it "lists out a single todo" do
       todo = Todo.new("take out rubbish")
       todo_list = TodoList.new
       todo_list.add(todo)
-      expect(todo_list.incomplete).to eq [todo]
+      expect(todo_list.all).to eq [todo]
     end
   end
 
-  context "6. adds a completed todo" do
-    xit "lists the completed todo" do
-      todo = Todo.new("take out rubbish #DONE")
-      todo_list = TodoList.new
-      todo_list.add(todo)
-      expect(todo_list.complete).to eq [todo]
-    end
-  end
-
-  context "7. adds one complete and one incomplete todo each" do
-    xit "lists only the incompelete todo" do
-      todo_1 = Todo.new("fold shirts #DONE")
+  context "6. adds multiple todos" do
+    it "lists both todos" do
+      todo_1 = Todo.new("feed the beast")
       todo_2 = Todo.new("take out trash")
       todo_list = TodoList.new
       todo_list.add(todo_1)
       todo_list.add(todo_2)
-      expect(todo_list.incomplete).to eq [todo_2]
-    end
-  end
-
-  context "8. adds two complete and two incomplete todos" do
-    xit "lists only the compelete todos" do
-      todo_1 = Todo.new("fold shirts #DONE")
-      todo_2 = Todo.new("take out trash")
-      todo_3 = Todo.new("wash dishes #DONE")
-      todo_4 = Todo.new("sweep floor")
-      todo_list = TodoList.new
-      todo_list.add(todo_1)
-      todo_list.add(todo_2)
-      todo_list.add(todo_3)
-      todo_list.add(todo_4)
-      expect(todo_list.complete).to eq [todo_1, todo_3]
-    end
-  end
-
-  context "9. takes all todos" do
-    xit "marks all as complete" do
-      todo_list = TodoList.new
-      todo_1 = Todo.new("fold shirts")
-      todo_2 = Todo.new("take out trash")
-      todo_3 = Todo.new("wash dishes")
-      todo_4 = Todo.new("sweep floor")
-      todo_list.add(todo_1)
-      todo_list.add(todo_2)
-      todo_list.add(todo_3)
-      todo_list.add(todo_4)
-      result = todo_list.give_up!
-      expect(result).to eq ["fold shirts #DONE", "take out trash #DONE", "wash dishes #DONE", "sweep floor #DONE"]
+      expect(todo_list.all).to eq [todo_1, todo_2]
     end
   end
 end
 
+# Now we test DiaryEntry and PhoneNumbers classes
+
 describe "integration test for DiaryEntry and PhoneNumbers" do
-  context "10. takes a diary entry with a phone number" do
-    xit "extracts the phone number and puts in array" do
-      diary = DiaryEntry.new("today", "my new friend game me their number 07477123456 on whatsapp")
+  
+  context "7. takes a diary entry with a phone number" do
+    it "extracts phone number" do
+      diary = DiaryEntry.new("Ptolemy", "07477222222")
       number = PhoneNumbers.new
+      result = number.extract_number(diary)
+      expect(result).to eq("07477222222")
+    end
+  end
+
+  context "8. takes a diary entry without a phone number" do
+    it "does not extract a name" do
+      diary = DiaryEntry.new("Kepler", "my new friend game me their number but I forgot it!")
+      number = PhoneNumbers.new
+      result = number.extract_number(diary)
+      expect(result).to eq("")
+    end
+  end
+
+  context "9. takes a diary entry with a phone number" do
+    it "extracts the name and the phone number" do
+      diary = DiaryEntry.new("Ptolemy", "07477111111")
+      number = PhoneNumbers.new
+      result = number.extract_name(diary)
+      expect(result).to eq("Ptolemy")
+    end
+  end
+
+  context "10. takes a diary entry with a phone number inside a string of text" do
+    it "extracts the phone number" do
+      diary = DiaryEntry.new("Kepler", "my friend game me their number 07477222222 on whatsapp")
+      number = PhoneNumbers.new
+      result = number.extract_number(diary)
+      expect(result).to eq("07477222222")
+    end
+  end
+
+  context "11. takes a diary entry with a non-phone number inside a string of text" do
+    it "does not extract any number" do
+      diary = DiaryEntry.new("Kepler", "my friend ate 12 cookies")
+      number = PhoneNumbers.new
+      result = number.extract_number(diary)
+      expect(result).to eq("")
+    end
+  end
+
+  context "12. takes a diary entry with a phone number" do
+    it "loads the name and phone number into a hash" do
+      diary = DiaryEntry.new("Copernicus", "my new friend game me their number 07477333333 on whatsapp")
+      number = PhoneNumbers.new
+      number.extract_name(diary)
       number.extract_number(diary)
+      number.loader
       result = number.contact_list  
-      expect(result).to eq ["07477123456"]
+      expect(result).to eq({"Copernicus" => "07477333333"})
     end
-  end
+  end  
 
-  context "11. takes two diary entries with a phone number" do
-    xit "extracts both phone number and puts in array" do
+  context "13. takes two diary entries with a phone number" do
+    it "extracts both names and phone numbers and puts into a hash" do
       number = PhoneNumbers.new
-      diary_1 = DiaryEntry.new("today", "my new friend game me their number 07477123456 on whatsapp")
-      diary_2 = ("yesterday", "my old friend changed their number to 07477654321")
-      number.extract_number(diary)
+      diary_entry_1 = DiaryEntry.new("Po Dameron", "my new friend game me their number 07477444444 on whatsapp")
+      diary_entry_2 = DiaryEntry.new("Thanos", "my old friend changed their number to 07477555555")
+      number.extract_name(diary_entry_1)
+      number.extract_number(diary_entry_1)
+      number.loader
+      number.extract_name(diary_entry_2)
+      number.extract_number(diary_entry_2)
+      number.loader
       result = number.contact_list
-      expect(result).to eq ["07477123456", "07477654321"]
-    end
-  end
-
-  context "12. takes diary entry without a phone number" do
-    xit "returns empty array" do
-      number = PhoneNumbers.new
-      diary_1 = DiaryEntry.new("today", "my new friend went to the store")
-      number.extract_number(diary)
-      result = number.contact_list
-      expect(result).to eq []
+      expect(result).to eq({"Po Dameron" => "07477444444", "Thanos" => "07477555555"})
     end
   end
 end
