@@ -28,7 +28,6 @@ describe "integration test for Diary and DiaryEntry" do
       expect(diary.all).to eq [entry_1, entry_2, entry_3] # list should be the diary entry 
     end
   end
-
   context "3. given multiple diary entries" do
     it "counts the words in the entries excluding the title" do
       diary = Diary.new
@@ -39,7 +38,6 @@ describe "integration test for Diary and DiaryEntry" do
       expect(diary.count_words).to eq 8 
     end
   end
-
   context "4. between one readable and one unreadable" do
     it "selects the readable one" do
       diary = Diary.new
@@ -52,9 +50,7 @@ describe "integration test for Diary and DiaryEntry" do
     end
   end
 end
-
-# Now we test ToDo and ToDoList classes
-
+# Now we test ToDo and ToDoList classe#s
 describe "integration test for ToDo and ToDoList" do
   context "5. add a todo" do
     it "lists out a single todo" do
@@ -64,7 +60,6 @@ describe "integration test for ToDo and ToDoList" do
       expect(todo_list.all).to eq [todo]
     end
   end
-
   context "6. adds multiple todos" do
     it "lists both todos" do
       todo_1 = Todo.new("feed the beast")
@@ -77,7 +72,7 @@ describe "integration test for ToDo and ToDoList" do
   end
 end
 
-# Now we test DiaryEntry and PhoneNumbers classes
+## Now we test DiaryEntry and PhoneNumbers classe#s
 
 describe "integration test for DiaryEntry and PhoneNumbers" do
   
@@ -90,17 +85,8 @@ describe "integration test for DiaryEntry and PhoneNumbers" do
     end
   end
 
-  context "8. takes a diary entry without a phone number" do
-    it "does not extract a name" do
-      diary = DiaryEntry.new("Kepler", "my new friend game me their number but I forgot it!")
-      number = PhoneNumbers.new
-      result = number.extract_number(diary)
-      expect(result).to eq("")
-    end
-  end
-
-  context "9. takes a diary entry with a phone number" do
-    it "extracts the name and the phone number" do
+  context "8. takes a diary entry with a phone number" do
+    it "extracts the name" do
       diary = DiaryEntry.new("Ptolemy", "07477111111")
       number = PhoneNumbers.new
       result = number.extract_name(diary)
@@ -108,7 +94,7 @@ describe "integration test for DiaryEntry and PhoneNumbers" do
     end
   end
 
-  context "10. takes a diary entry with a phone number inside a string of text" do
+  context "9. takes a diary entry with a phone number inside a string of text" do
     it "extracts the phone number" do
       diary = DiaryEntry.new("Kepler", "my friend game me their number 07477222222 on whatsapp")
       number = PhoneNumbers.new
@@ -117,7 +103,7 @@ describe "integration test for DiaryEntry and PhoneNumbers" do
     end
   end
 
-  context "11. takes a diary entry with a non-phone number inside a string of text" do
+  context "10. takes a diary entry with a non-phone number inside a string of text" do
     it "does not extract any number" do
       diary = DiaryEntry.new("Kepler", "my friend ate 12 cookies")
       number = PhoneNumbers.new
@@ -126,7 +112,7 @@ describe "integration test for DiaryEntry and PhoneNumbers" do
     end
   end
 
-  context "12. takes a diary entry with a phone number" do
+  context "11. takes a diary entry with a phone number" do
     it "loads the name and phone number into a hash" do
       diary = DiaryEntry.new("Copernicus", "my new friend game me their number 07477333333 on whatsapp")
       number = PhoneNumbers.new
@@ -136,7 +122,17 @@ describe "integration test for DiaryEntry and PhoneNumbers" do
       result = number.contact_list  
       expect(result).to eq({"Copernicus" => "07477333333"})
     end
-  end  
+  end 
+
+  context "12. takes a diary entry without a phone number" do
+    xit "does not extract a name" do
+      diary = DiaryEntry.new("Kepler", "my new friend game me their number but I forgot it!")
+      number = PhoneNumbers.new
+      result = number.extract_name(diary)
+      expect(result).to eq("")
+    end
+  end
+
 
   context "13. takes two diary entries with a phone number" do
     it "extracts both names and phone numbers and puts into a hash" do

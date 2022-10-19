@@ -37,15 +37,15 @@
 │                          │
 │                          │
 │                          │
-└────────────┬─────────────┘
+└────────────^─────────────┘
              │
              │
-DiaryEntry   │
+Diary        │
 will take    │
 instance of  │
-Diary        │
+DiaryEntry   │
              │
-             ▼
+             
 ┌──────────────────────────┐                   ┌────────────────────────┐
 │ DiaryEntry               │                   │ PhoneNumbers           │
 │ ----------               │                   │ ------------           │
@@ -71,7 +71,7 @@ Diary        │
 └────────────┬─────────────┘
              │
              │ ToDoList takes instance
-             │ of ToDo list
+             │ of ToDo
              │
 ┌────────────▼─────────────┐
 │ ToDoList                 │
@@ -153,7 +153,7 @@ class PhoneNumbers
 
   def extract_name(diary)
     # takes instance of DiaryEntry and returns a name
-    # will need to use ttitle method from DiaryEntry
+    # will need to use title method from DiaryEntry
 
   end
 
@@ -259,7 +259,7 @@ describe "integration test for DiaryEntry and PhoneNumbers" do
   end
 
   context "8. takes a diary entry without a phone number" do
-    it "does not extract a name" do
+    it "does not extract a number" do
       diary = DiaryEntry.new("Kepler", "my new friend game me their number but I forgot it!")
       number = PhoneNumbers.new
       result = number.extract_number(diary)
@@ -268,7 +268,7 @@ describe "integration test for DiaryEntry and PhoneNumbers" do
   end
 
   context "9. takes a diary entry with a phone number" do
-    it "extracts the name and the phone number" do
+    it "extracts the name" do
       diary = DiaryEntry.new("Ptolemy", "07477111111")
       number = PhoneNumbers.new
       result = number.extract_name(diary)
